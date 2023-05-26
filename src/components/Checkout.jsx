@@ -4,11 +4,12 @@ import useOrders from "../hooks/useOrders";
 import usePrototypes from "../hooks/usePrototypes";
 import { useNavigate } from "react-router-dom";
 
-export default function Orders() {
+export default function Checkout() {
   const navigate = useNavigate();
-  function checkout() {
-    navigate("/checkout");
+  function cancel() {
+    navigate("/");
   }
+
   const orders = useOrders();
   const prototypes = usePrototypes();
   const { remove, removeAll } = useActions();
@@ -23,20 +24,10 @@ export default function Orders() {
       .reduce((l, r) => l + r, 0);
   }, [orders, prototypes]);
 
-  if (orders.length === 0) {
-    return (
-      <aside>
-        <div className="empty">
-          <div className="title">You don't have any orders</div>
-          <div className="subtitle">Click on a + to add an order</div>
-        </div>
-      </aside>
-    );
-  }
-
   return (
     <aside>
-      <div className="order">
+      <div className="payment">
+        <p>Checkout</p>
         <div className="body">
           {orders.map((order) => {
             const { id } = order;
@@ -76,11 +67,18 @@ export default function Orders() {
             </button>
           </div>
           <button
-            onClick={checkout}
-            className="btn btn--secondary"
-            style={{ width: "100%", marginTop: 10 }}
+            // onClick={checkout}
+            className="btn btn--primary"
+            style={{ width: "50%", marginTop: 10 }}
           >
-            Checkout
+            Payment
+          </button>
+          <button
+            onClick={cancel}
+            className="btn btn--primary"
+            style={{ width: "50%", marginTop: 10 }}
+          >
+            Cancel
           </button>
         </div>
       </div>
